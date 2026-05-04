@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎉 Festa do Miguel - 9 anos!</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #6c2fad;
+    --purple-dark: #4a1a7a;
+    --orange: #ff6b1a;
+    --yellow: #ffd600;
+    --pink: #ff3d8b;
+    --cyan: #00e5ff;
+    --green: #00e676;
+    --bg: #0d0025;
+    --card: rgba(255,255,255,0.07);
+    --card-border: rgba(255,255,255,0.15);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* PARTÍCULAS */
+  .particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: float linear infinite;
+    opacity: 0.4;
+  }
+  @keyframes float {
+    0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.4; }
+    90% { opacity: 0.4; }
+    100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+  }
+
+  .wrapper { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 0 16px 60px; }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 32px 0 24px;
+  }
+  .hero-img-wrap {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  .hero-img {
+    width: 220px;
+    border-radius: 24px;
+    border: 4px solid var(--yellow);
+    box-shadow: 0 0 40px rgba(255,214,0,0.4), 0 0 80px rgba(108,47,173,0.6);
+    display: block;
+    margin: 0 auto;
+  }
+  .star-badge {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    background: var(--yellow);
+    color: var(--purple-dark);
+    font-family: 'Fredoka One', cursive;
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 50px;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+
+  h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(32px, 8vw, 52px);
+    background: linear-gradient(135deg, var(--yellow), var(--orange), var(--pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+    color: rgba(255,255,255,0.75);
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .info-pills {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .pill {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .pill span { font-size: 18px; }
+
+  /* ABAS */
+  .tabs {
+    display: flex;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 6px;
+    margin: 28px 0 24px;
+    gap: 6px;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 12px 8px;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.25s;
+    background: transparent;
+    color: rgba(255,255,255,0.5);
+  }
+  .tab-btn.active {
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(108,47,173,0.5);
+  }
+
+  /* SEÇÕES */
+  .section { display: none; animation: fadeIn 0.3s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* CONFIRMAR PRESENÇA */
+  .rsvp-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 28px 24px;
+    margin-bottom: 16px;
+  }
+  .rsvp-card h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    color: var(--yellow);
+    margin-bottom: 6px;
+  }
+  .rsvp-card p {
+    color: rgba(255,255,255,0.65);
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  input, select, textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 12px;
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    outline: none;
+    transition: border 0.2s;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--purple);
+    background: rgba(108,47,173,0.15);
+  }
+  select option { background: #1a0040; color: #fff; }
+  textarea { resize: vertical; min-height: 80px; }
+
+  .btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--orange), var(--pink));
+    color: #fff;
+    box-shadow: 0 4px 24px rgba(255,107,26,0.4);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,107,26,0.5); }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-secondary {
+    background: linear-gradient(135deg, var(--purple), #9b3df7);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(108,47,173,0.4);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+  }
+  .btn-secondary:hover { transform: translateY(-2px); }
+
+  /* RESUMO RSVP */
+  .rsvp-summary {
+    background: rgba(0,230,118,0.08);
+    border: 1px solid rgba(0,230,118,0.3);
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 16px;
+    display: none;
+  }
+  .rsvp-summary h3 { font-family: 'Fredoka One', cursive; color: var(--green); font-size: 18px; margin-bottom: 12px; }
+  .rsvp-list { list-style: none; }
+  .rsvp-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .rsvp-item:last-child { border-bottom: none; }
+  .rsvp-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+  .rsvp-dot.absent { background: #ff4444; }
+  .rsvp-count {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+  }
+  .rsvp-count-num { font-family: 'Fredoka One', cursive; font-size: 28px; display: block; }
+  .rsvp-count-label { font-size: 12px; color: rgba(255,255,255,0.55); font-weight: 600; }
+
+  /* PRESENTES */
+  .gifts-header {
+    margin-bottom: 20px;
+  }
+  .gifts-header h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    color: var(--yellow);
+    margin-bottom: 4px;
+  }
+  .gifts-header p { color: rgba(255,255,255,0.6); font-size: 14px; }
+
+  .gift-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  .gift-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .gift-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(108,47,173,0.3); }
+  .gift-card.reserved {
+    opacity: 0.65;
+    pointer-events: none;
+  }
+  .gift-card.reserved-by-me { opacity: 1; pointer-events: auto; }
+
+  .reserved-overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    border-radius: 18px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 2;
+  }
+  .gift-card.reserved .reserved-overlay { display: flex; }
+  .gift-card.reserved-by-me .reserved-overlay { display: none; }
+
+  .reserved-tag {
+    background: #ff4444;
+    color: #fff;
+    font-family: 'Fredoka One', cursive;
+    font-size: 18px;
+    padding: 8px 20px;
+    border-radius: 50px;
+    text-align: center;
+  }
+  .reserved-name {
+    color: rgba(255,255,255,0.8);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .my-reserved-badge {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--green);
+    color: #003020;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 50px;
+    z-index: 3;
+  }
+  .gift-card.reserved-by-me .my-reserved-badge { display: block; }
+
+  .gift-img-wrap {
+    width: 100%;
+    height: 160px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.04);
+  }
+  .gift-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .gift-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+  }
+
+  .gift-body { padding: 14px; }
+  .gift-name {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    color: rgba(255,255,255,0.9);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .gift-actions { display: flex; gap: 8px; }
+  .btn-reserve {
+    flex: 1;
+    padding: 10px 8px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    color: #fff;
+  }
+  .btn-reserve:hover { transform: scale(1.03); }
+
+  .btn-unreserve {
+    flex: 1;
+    padding: 10px 8px;
+    border: 1px solid rgba(255,68,68,0.5);
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    background: rgba(255,68,68,0.1);
+    color: #ff8888;
+    transition: all 0.2s;
+  }
+
+  .btn-shopee {
+    padding: 10px 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    background: #ee4d2d;
+    color: #fff;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-shopee:hover { background: #d63d20; }
+
+  /* MODAL */
+  .modal-bg {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-bg.open { display: flex; }
+  .modal {
+    background: #1a0040;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 24px;
+    padding: 28px 24px;
+    width: 100%;
+    max-width: 420px;
+    animation: slideUp 0.25s ease;
+  }
+  @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal h3 { font-family: 'Fredoka One', cursive; font-size: 20px; color: var(--yellow); margin-bottom: 6px; }
+  .modal p { color: rgba(255,255,255,0.65); font-size: 14px; margin-bottom: 18px; }
+  .modal-gift-name {
+    background: rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    line-height: 1.4;
+  }
+  .modal-actions { display: flex; gap: 10px; }
+  .btn-cancel {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    background: transparent;
+    color: rgba(255,255,255,0.6);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .btn-confirm {
+    flex: 2;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--orange), var(--pink));
+    color: #fff;
+    font-family: 'Fredoka One', cursive;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  /* SUCCESS TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: #1a0040;
+    border: 1px solid var(--green);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 14px;
+    z-index: 200;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .stat-chip {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 50px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .stat-chip.green { color: var(--green); border-color: rgba(0,230,118,0.3); background: rgba(0,230,118,0.08); }
+  .stat-chip.red { color: #ff8888; border-color: rgba(255,68,68,0.3); background: rgba(255,68,68,0.08); }
+
+  /* NAME PROMPT */
+  .name-prompt {
+    background: rgba(255,214,0,0.08);
+    border: 1px solid rgba(255,214,0,0.3);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+  .name-prompt > div { flex: 1; }
+  .name-prompt label { color: rgba(255,214,0,0.8); margin-bottom: 6px; }
+  .name-prompt input { margin-bottom: 0; }
+  .name-prompt button {
+    padding: 12px 16px;
+    border: none;
+    border-radius: 12px;
+    background: var(--yellow);
+    color: var(--purple-dark);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .name-set-msg {
+    background: rgba(0,230,118,0.08);
+    border: 1px solid rgba(0,230,118,0.25);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 16px;
+    display: none;
+  }
+
+  /* RODAPÉ */
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    color: rgba(255,255,255,0.25);
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Partículas decorativas -->
+<div class="particles" id="particles"></div>
+
+<div class="wrapper">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-img-wrap">
+      <img class="hero-img" src="Imagem1.png" alt="Festa do Miguel" onerror="this.style.display='none'">
+      <div class="star-badge">⭐ 9 anos!</div>
+    </div>
+    <h1>Festa do Miguel!</h1>
+    <p class="subtitle">🎉 Vamos comemorar juntos essa data especial 🎉</p>
+    <div class="info-pills">
+      <div class="pill"><span>📅</span> 30 de maio</div>
+      <div class="pill"><span>🕓</span> 16h</div>
+      <div class="pill"><span>📍</span> Minha Casa</div>
+    </div>
+  </div>
+
+  <!-- ABAS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('rsvp', this)">✅ Confirmar Presença</button>
+    <button class="tab-btn" onclick="switchTab('gifts', this)">🎁 Lista de Presentes</button>
+  </div>
+
+  <!-- SEÇÃO: CONFIRMAÇÃO DE PRESENÇA -->
+  <div id="tab-rsvp" class="section active">
+
+    <div class="rsvp-card">
+      <h2>📋 Confirme sua presença</h2>
+      <p>Preencha abaixo para avisar se a criançada vai comparecer à festa. Isso nos ajuda a organizar melhor!</p>
+
+      <label>Seu nome (responsável)</label>
+      <input type="text" id="rsvp-name" placeholder="Ex: Ana Paula" />
+
+      <label>Nome da criança</label>
+      <input type="text" id="rsvp-child" placeholder="Ex: Beatriz" />
+
+      <label>Vai participar da festa?</label>
+      <select id="rsvp-going">
+        <option value="">Selecione...</option>
+        <option value="sim">✅ Sim, vamos!</option>
+        <option value="nao">❌ Não poderemos ir</option>
+        <option value="talvez">🤔 Talvez, ainda não temos certeza</option>
+      </select>
+
+      <label>Quantidade de crianças que virão</label>
+      <select id="rsvp-count">
+        <option value="0">0</option>
+        <option value="1" selected>1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4+</option>
+      </select>
+
+      <label>Mensagem para o Miguel (opcional)</label>
+      <textarea id="rsvp-msg" placeholder="Deixe um recado carinhoso..."></textarea>
+
+      <button class="btn btn-primary" onclick="submitRsvp()">🎊 Confirmar presença!</button>
+    </div>
+
+    <!-- Resumo das confirmações -->
+    <div class="rsvp-summary" id="rsvp-summary">
+      <h3>📊 Confirmações até agora</h3>
+      <div class="rsvp-count" id="rsvp-count-display"></div>
+      <ul class="rsvp-list" id="rsvp-list"></ul>
+    </div>
+
+  </div>
+
+  <!-- SEÇÃO: PRESENTES -->
+  <div id="tab-gifts" class="section">
+
+    <div class="gifts-header">
+      <h2>🎁 Lista de presentes do Miguel</h2>
+      <p>Escolha um presente e reserve para não ter duplicados! Clique no botão laranja para ver na Shopee.</p>
+    </div>
+
+    <!-- Identificação do usuário -->
+    <div class="name-prompt" id="name-prompt">
+      <div>
+        <label>Seu nome para reservar</label>
+        <input type="text" id="visitor-name-input" placeholder="Seu nome completo" />
+      </div>
+      <button onclick="setVisitorName()">Salvar</button>
+    </div>
+    <div class="name-set-msg" id="name-set-msg"></div>
+
+    <!-- Stats -->
+    <div class="stats-bar">
+      <div class="stat-chip green" id="stat-free">🟢 0 disponíveis</div>
+      <div class="stat-chip red" id="stat-taken">🔴 0 reservados</div>
+    </div>
+
+    <div class="gift-grid" id="gift-grid"></div>
+
+  </div>
+
+</div><!-- /wrapper -->
+
+<!-- MODAL DE RESERVA -->
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <h3>Reservar presente</h3>
+    <p>Você está reservando:</p>
+    <div class="modal-gift-name" id="modal-gift-name"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-confirm" onclick="confirmReserve()">✅ Confirmar reserva</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<div class="footer">
+  Feito com 💜 para o Miguel • Festa Kids 2025
+</div>
+
+<script>
+// ============================================================
+// DADOS DOS PRODUTOS
+// ============================================================
+const GIFTS = [
+  { id:1,  name:"Jogo Desafio do Choque – Labirinto com Luz e Som",         img:"https://down-br.img.susercontent.com/file/sg-11134201-821f7-mh2auh42lxqla0", url:"https://br.shp.ee/v2qj4JYi" },
+  { id:2,  name:"Jogo Twister Move Interativo – Festa em Família",           img:"https://down-br.img.susercontent.com/file/sg-11134201-8262l-mj906sfg4bnn7d",  url:"https://br.shp.ee/Y6KaViBC" },
+  { id:3,  name:"Jogo de Tabuleiro Lince Grow",                              img:"https://down-br.img.susercontent.com/file/br-11134207-81z1k-mekjctlbqgao85",  url:"https://br.shp.ee/N1LFsmzE" },
+  { id:4,  name:"Jogo Bloqueio – Construa Seu Caminho (Grow)",               img:"https://down-br.img.susercontent.com/file/sg-11134201-7rep5-m1syofqv9q6730",  url:"https://br.shp.ee/2kV2gZBR" },
+  { id:5,  name:"Jogo Twister Original – Família e Amigos",                  img:"https://down-br.img.susercontent.com/file/br-11134207-81z1k-me8w8wj6e58j08",  url:"https://br.shp.ee/c8Eko2Lz" },
+  { id:6,  name:"Cidade Dorme – Jogo de Tabuleiro Netolab",                  img:"https://down-br.img.susercontent.com/file/br-11134207-81zu0-mkmg5464wiyr44",  url:"https://br.shp.ee/ytpTXqDF" },
+  { id:7,  name:"Jogo Partiu – A Incrível Corrida da Vida (Top Line)",       img:"https://down-br.img.susercontent.com/file/br-11134207-81ztc-mjoefycy4b9f24",  url:"https://br.shp.ee/vkMoJJwS" },
+  { id:8,  name:"Jogo Emboscada – 50 Desafios de Raciocínio",                img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-m7vfabzt31vm40",  url:"https://br.shp.ee/o3JNz8tE" },
+  { id:9,  name:"Jogo Corrida da Vida com Cartas e Dinheiro",                img:"https://down-br.img.susercontent.com/file/br-11134207-81z1k-mejgmeow1log6b",  url:"https://br.shp.ee/Scxd8P2R" },
+  { id:10, name:"Jogo Tabuleiro Magnético Portátil – Pedras Educativas",     img:"https://down-br.img.susercontent.com/file/br-11134207-820m9-mmg256dzbb47a2",  url:"https://br.shp.ee/ojaVkGfx" },
+  { id:11, name:"Jogo DIG IN – Encontre Se For Capaz (Copag)",               img:"https://down-br.img.susercontent.com/file/sg-11134201-7rep2-m1ojxv689rau60",  url:"https://br.shp.ee/zNd9vwuC" },
+  { id:12, name:"Jogo de Tabuleiro Detetive Mistérios",                      img:"https://down-br.img.susercontent.com/file/br-11134207-81z1k-mg83b3vct1c515",  url:"https://br.shp.ee/JYMnuLTG" },
+  { id:13, name:"Jogo Pizzaria Maluca (Grow)",                               img:"https://down-br.img.susercontent.com/file/sg-11134201-7qve2-lf2o95txpg1f61",  url:"https://br.shp.ee/9pBhH62E" },
+  { id:14, name:"Taco Cat Goat Cheese Pizza – Jogo de Cartas",               img:"https://down-br.img.susercontent.com/file/sg-11134201-81zvn-miigzg9qlatj26",  url:"https://br.shp.ee/7iZGaxcj" },
+  { id:15, name:"One Piece – Navio Thousand Sunny 460 peças (Luffy/Zoro)",   img:"https://down-br.img.susercontent.com/file/sg-11134201-821gh-mgsgpcuvponi7b",  url:"https://br.shp.ee/EoCP4ZrX" },
+  { id:16, name:"Jogo Agilidade Moveball – Botões Coloridos Educativo",      img:"https://down-br.img.susercontent.com/file/sg-11134201-7rblm-lmdhs7zfj9gpd4",  url:"https://br.shp.ee/MeQrgj6s" },
+  { id:17, name:"Jogo Emboscada – 50 Desafios (versão 2)",                   img:"https://down-br.img.susercontent.com/file/br-11134207-81z1k-mf5tlnuj78xx00",  url:"https://br.shp.ee/9BfFzBbs" },
+  { id:18, name:"Jogo de Cartas Blecaute – Toyster (Memória e Raciocínio)",  img:"https://down-br.img.susercontent.com/file/sg-11134201-824hz-mfeq7p0kcu893d",  url:"https://br.shp.ee/wWpvgWhW" },
+  { id:19, name:"Jogo Contra o Tempo – 26 Peças Formas Geométricas",         img:"https://down-br.img.susercontent.com/file/br-11134207-820lv-mlqholqqyosg9b",  url:"https://br.shp.ee/WyUn75gu" },
+  { id:20, name:"Jogo Bloqueio – Construa Seu Caminho (Grow) #2",            img:"https://down-br.img.susercontent.com/file/sg-11134201-7rep5-m1syofqv9q6730",  url:"https://br.shp.ee/QTSFV3wk" },
+  { id:21, name:"Livros R. J. Palácio – Títulos Diversos",                   img:"https://down-br.img.susercontent.com/file/sg-11134201-7rfg2-m9heypglhleq0a",  url:"https://br.shp.ee/csQmggAk" },
+  { id:22, name:"Murdoku – 80 Mistérios para Resolver com Lógica",           img:"https://down-br.img.susercontent.com/file/sg-11134201-822wn-mi0tg20fbwg3c7",  url:"https://br.shp.ee/3NkMaEuV" },
+  { id:23, name:"Livro Goosebumps – Kit com 3 Unidades",                     img:"https://down-br.img.susercontent.com/file/br-11134207-820lv-mnbsgl6c4nic51",  url:"https://br.shp.ee/jWUBPNaf" },
+  { id:24, name:"O Orfanato da Srta. Peregrine para Crianças Peculiares",    img:"https://down-br.img.susercontent.com/file/sg-11134201-81zu0-mmrzwyeyx1j5db",  url:"https://br.shp.ee/BKuezUD6" },
+  { id:25, name:"Percy Jackson – O Mar de Monstros (Rick Riordan)",          img:"https://down-br.img.susercontent.com/file/br-11134207-820l7-mm0h9td4h0cmfe",  url:"https://br.shp.ee/YsR9Y4Zp" },
+  { id:26, name:"A Festa Incrível que Nunca Acaba (Livro Infantil)",         img:"https://down-br.img.susercontent.com/file/br-11134207-820la-mnhp9xw9j0uaf6",  url:"https://br.shp.ee/n3MxvTC6" },
+  { id:27, name:"Livro Aventuras Estranhas – A Noite do Meteoro",            img:"https://down-br.img.susercontent.com/file/84f11c44d54a11631e84ab96025aca5b",  url:"https://br.shp.ee/eYhoVDyz" },
+  { id:28, name:"Kit 2 Livros – Os Últimos Jovens da Terra",                 img:"https://down-br.img.susercontent.com/file/br-11134207-81zu2-mkl1gn93nrwi7e",  url:"https://br.shp.ee/WDDipeSW" },
+  { id:29, name:"Os Últimos Jovens da Terra – A Aventura da June",           img:"https://down-br.img.susercontent.com/file/sg-11134201-7rdvg-lzl072ktjsdw34",  url:"https://br.shp.ee/wxFTPp8z" },
+  { id:30, name:"Livro Aventuras Escape Room – O Maior Caso de Sherlock",    img:"https://down-br.img.susercontent.com/file/sg-11134201-8260k-mkif9pyc5gqo20",  url:"https://br.shp.ee/y689pXbC" },
+  { id:31, name:"Jogo de Lógica IQ Inteligente – 120 Desafios",             img:"https://down-br.img.susercontent.com/file/br-11134207-820lz-mmvwykcm9gxt75",  url:"https://br.shp.ee/AcjvxQqn" },
+  { id:32, name:"Jogo Desafio de Cordas Coloridas – Raciocínio Lógico",     img:"https://down-br.img.susercontent.com/file/br-11134207-820m0-mn4qgtoo3u9u84",  url:"https://br.shp.ee/mEGrGjXq" },
+  { id:33, name:"Percy Jackson – O Mar de Monstros #2",                      img:"https://down-br.img.susercontent.com/file/br-11134207-820l7-mm0h9td4h0cmfe",  url:"https://br.shp.ee/8RMDMg8s" },
+  { id:34, name:"Percy Jackson – Batalha do Labirinto (Rick Riordan)",       img:"https://down-br.img.susercontent.com/file/br-11134207-81zuf-mkmjysafz0g271",  url:"https://br.shp.ee/2sFthnxP" },
+];
+
+// ============================================================
+// STATE (localStorage para persistência no navegador)
+// ============================================================
+const STORAGE_KEY_GIFTS   = 'miguel_festa_reservas';
+const STORAGE_KEY_RSVP    = 'miguel_festa_rsvp';
+const STORAGE_KEY_VISITOR = 'miguel_festa_visitor';
+
+function loadState(key, def) {
+  try { return JSON.parse(localStorage.getItem(key)) || def; } catch(e) { return def; }
+}
+function saveState(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
+}
+
+let reservations  = loadState(STORAGE_KEY_GIFTS,   {});  // { giftId: "Nome" }
+let rsvpList      = loadState(STORAGE_KEY_RSVP,    []);
+let visitorName   = loadState(STORAGE_KEY_VISITOR, '');
+
+let pendingGiftId = null;
+
+// ============================================================
+// PARTÍCULAS
+// ============================================================
+const colors = ['#ffd600','#ff6b1a','#ff3d8b','#00e5ff','#00e676','#a855f7'];
+const pc = document.getElementById('particles');
+for(let i=0;i<28;i++){
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const sz = Math.random()*6+4;
+  p.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s`;
+  pc.appendChild(p);
+}
+
+// ============================================================
+// ABAS
+// ============================================================
+function switchTab(tab, btn) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  btn.classList.add('active');
+  if(tab==='gifts') renderGifts();
+  if(tab==='rsvp') renderRsvpSummary();
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ============================================================
+// RSVP
+// ============================================================
+function submitRsvp() {
+  const name  = document.getElementById('rsvp-name').value.trim();
+  const child = document.getElementById('rsvp-child').value.trim();
+  const going = document.getElementById('rsvp-going').value;
+  const count = document.getElementById('rsvp-count').value;
+  const msg   = document.getElementById('rsvp-msg').value.trim();
+
+  if(!name || !child || !going) { showToast('⚠️ Preencha os campos obrigatórios!'); return; }
+
+  const entry = { name, child, going, count: parseInt(count), msg, ts: Date.now() };
+  rsvpList.push(entry);
+  saveState(STORAGE_KEY_RSVP, rsvpList);
+
+  // limpar
+  ['rsvp-name','rsvp-child','rsvp-msg'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('rsvp-going').value='';
+  document.getElementById('rsvp-count').value='1';
+
+  showToast('🎉 Presença confirmada! Obrigado!');
+  renderRsvpSummary();
+}
+
+function renderRsvpSummary() {
+  const box  = document.getElementById('rsvp-summary');
+  const list = document.getElementById('rsvp-list');
+  const cnt  = document.getElementById('rsvp-count-display');
+
+  if(!rsvpList.length) { box.style.display='none'; return; }
+  box.style.display='block';
+
+  const going = rsvpList.filter(r=>r.going==='sim');
+  const notGoing = rsvpList.filter(r=>r.going==='nao');
+  const maybe = rsvpList.filter(r=>r.going==='talvez');
+  const totalKids = going.reduce((s,r)=>s+r.count,0);
+
+  cnt.innerHTML = `
+    <div><span class="rsvp-count-num" style="color:#00e676">${going.length}</span><span class="rsvp-count-label">confirmados</span></div>
+    <div><span class="rsvp-count-num" style="color:#ff8888">${notGoing.length}</span><span class="rsvp-count-label">não vão</span></div>
+    <div><span class="rsvp-count-num" style="color:#ffd600">${maybe.length}</span><span class="rsvp-count-label">talvez</span></div>
+    <div><span class="rsvp-count-num" style="color:#00e5ff">${totalKids}</span><span class="rsvp-count-label">crianças</span></div>
+  `;
+
+  list.innerHTML = rsvpList.slice().reverse().map(r=>{
+    const icon = r.going==='sim'?'✅':r.going==='nao'?'❌':'🤔';
+    const dot  = r.going==='nao'?'absent':'';
+    return `<li class="rsvp-item"><div class="rsvp-dot ${dot}"></div>${icon} <strong>${r.child}</strong> (${r.name})${r.msg?` — "${r.msg}"`:''}</li>`;
+  }).join('');
+}
+
+// ============================================================
+// NOME DO VISITANTE
+// ============================================================
+function setVisitorName() {
+  const val = document.getElementById('visitor-name-input').value.trim();
+  if(!val) { showToast('⚠️ Digite seu nome!'); return; }
+  visitorName = val;
+  saveState(STORAGE_KEY_VISITOR, visitorName);
+  document.getElementById('name-prompt').style.display='none';
+  document.getElementById('name-set-msg').style.display='block';
+  document.getElementById('name-set-msg').textContent = `👋 Olá, ${visitorName}! Agora você pode reservar presentes.`;
+  renderGifts();
+}
+
+// ============================================================
+// PRESENTES
+// ============================================================
+function renderGifts() {
+  // inicializar nome
+  if(visitorName) {
+    document.getElementById('name-prompt').style.display='none';
+    document.getElementById('name-set-msg').style.display='block';
+    document.getElementById('name-set-msg').textContent = `👋 Olá, ${visitorName}! Agora você pode reservar presentes.`;
+  }
+
+  const grid = document.getElementById('gift-grid');
+  const taken = Object.keys(reservations).length;
+  const free  = GIFTS.length - taken;
+  document.getElementById('stat-free').textContent  = `🟢 ${free} disponíveis`;
+  document.getElementById('stat-taken').textContent = `🔴 ${taken} reservados`;
+
+  grid.innerHTML = GIFTS.map(g => {
+    const reservedBy  = reservations[g.id];
+    const isReserved  = !!reservedBy;
+    const isMine      = reservedBy === visitorName;
+
+    const cls = isReserved ? (isMine ? 'reserved reserved-by-me' : 'reserved') : '';
+
+    const actions = isMine
+      ? `<button class="btn-unreserve" onclick="unreserveGift(${g.id})">❌ Cancelar reserva</button>
+         <a class="btn-shopee" href="${g.url}" target="_blank">🛒 Ver</a>`
+      : isReserved
+        ? `<span style="font-size:12px;color:#ff8888;font-weight:700;">Já reservado</span>`
+        : `<button class="btn-reserve" onclick="startReserve(${g.id})">🎁 Reservar este</button>
+           <a class="btn-shopee" href="${g.url}" target="_blank">🛒 Ver</a>`;
+
+    return `
+      <div class="gift-card ${cls}" id="gift-card-${g.id}">
+        <div class="my-reserved-badge">✅ Meu</div>
+        <div class="reserved-overlay">
+          <div class="reserved-tag">🔴 Reservado!</div>
+          <div class="reserved-name">${reservedBy||''}</div>
+        </div>
+        <div class="gift-img-wrap">
+          <img class="gift-img" src="${g.img}" alt="${g.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="gift-img-placeholder" style="display:none">🎁</div>
+        </div>
+        <div class="gift-body">
+          <div class="gift-name">${g.name}</div>
+          <div class="gift-actions">${actions}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function startReserve(id) {
+  if(!visitorName) { showToast('⚠️ Digite seu nome primeiro!'); return; }
+  const g = GIFTS.find(g=>g.id===id);
+  pendingGiftId = id;
+  document.getElementById('modal-gift-name').textContent = g.name;
+  document.getElementById('modal-bg').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-bg').classList.remove('open');
+  pendingGiftId = null;
+}
+
+function confirmReserve() {
+  if(!pendingGiftId) return;
+  if(reservations[pendingGiftId]) { showToast('⚠️ Já foi reservado!'); closeModal(); return; }
+  reservations[pendingGiftId] = visitorName;
+  saveState(STORAGE_KEY_GIFTS, reservations);
+  closeModal();
+  showToast('🎉 Presente reservado com sucesso!');
+  renderGifts();
+}
+
+function unreserveGift(id) {
+  if(reservations[id]!==visitorName) { showToast('Você não pode cancelar a reserva de outra pessoa.'); return; }
+  delete reservations[id];
+  saveState(STORAGE_KEY_GIFTS, reservations);
+  showToast('✅ Reserva cancelada.');
+  renderGifts();
+}
+
+// Inicializar
+renderRsvpSummary();
+if(visitorName) renderGifts();
+</script>
+</body>
+</html>
